@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MEDaí – Eva, assistente virtual de saúde</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg style="position:absolute;width:0;height:0"><symbol id="lg" viewBox="0 0 24 24"><path d="M9 3h6v6h6v6h-6v6H9v-6H3V9h6z" fill="currentColor"/><circle cx="12" cy="12" r="2.2" fill="#44DCE7"/></symbol></svg>
+
+<section id="s-open" class="screen">
+  <div class="logo"><svg width="52" height="52"><use href="#lg"/></svg></div>
+  <h1>MEDaí</h1><p>Eva, sua assistente virtual de saúde</p>
+  <button class="btn" id="go">Começar</button>
+</section>
+
+<section id="s-reg" class="screen" hidden>
+  <div class="box">
+    <h2>Crie seu cadastro</h2>
+    <label for="rn">Nome</label><input id="rn" autocomplete="name"><span class="er" id="en" hidden></span>
+    <label for="re">E-mail</label><input id="re" type="email" autocomplete="email"><span class="er" id="ee" hidden></span>
+    <label for="rp">Senha</label><input id="rp" type="password" autocomplete="new-password"><span class="er" id="ep" hidden></span>
+    <label for="rc">Cidade</label><input id="rc"><span class="er" id="ec" hidden></span>
+    <label for="ru">Estado (UF)</label><input id="ru" maxlength="2"><span class="er" id="eu" hidden></span>
+    <label style="display:flex;gap:8px;font-weight:400"><input type="checkbox" id="rl" style="width:auto;margin-top:4px">Concordo com o uso dos meus dados, conforme a LGPD (demonstração).</label>
+    <span class="er" id="el" hidden></span>
+    <button class="btn" id="reg" style="margin-top:16px;width:100%">Criar cadastro</button>
+  </div>
+</section>
+
+<section id="s-err" class="screen" hidden>
+  <h1>Ops, algo deu errado!</h1>
+  <p>Não foi possível falar com a Eva. Vamos tentar de novo assim que a conexão voltar.</p>
+  <button class="btn" id="retry">Tentar novamente</button>
+</section>
+
+<div id="app" hidden>
+  <header>
+    <div class="logo"><svg width="22" height="22"><use href="#lg"/></svg></div><b>MEDaí</b>
+    <nav id="nav" aria-label="Principal"></nav>
+    <button id="more" aria-label="Mais opções">⋮</button>
+  </header>
+  <div class="layout">
+    <aside id="extras"></aside>
+    <main>
+      <section class="tab" id="t-chat">
+        <div id="msgs" aria-live="polite"></div>
+        <div id="bar"><input id="in" placeholder="Escreva para a Eva" aria-label="Mensagem"><button class="btn" id="snd">Enviar</button></div>
+        <small id="demo">Modo demonstração: unidades e horários fictícios.</small>
+      </section>
+      <section class="tab" id="t-consultas"></section>
+      <section class="tab" id="t-exames"></section>
+      <section class="tab" id="t-emerg">
+        <div class="card red"><b>Risco de vida? Ligue agora para o SAMU: 192</b><br><a class="btn red" href="tel:192" style="margin-top:8px">Ligar 192</a></div>
+        <label for="etx">Descreva o que você está sentindo</label>
+        <textarea id="etx" rows="4" placeholder="Ex.: estou com dor forte no peito desde ontem"></textarea>
+        <label for="ecity">Sua localização (cidade ou bairro, caso não permita o GPS)</label><input id="ecity">
+        <button class="btn" id="ebtn" style="margin:12px 0">Encontrar hospital mais próximo</button>
+        <div id="ealert"></div><div id="eres"></div>
+        <h3>Números de emergência</h3><div class="grid" id="nums"></div>
+        <p><small>O MEDaí não faz diagnóstico nem substitui atendimento médico.</small></p>
+      </section>
+      <section class="tab" id="t-hist"></section>
+      <section class="tab" id="t-perfil"></section>
+    </main>
+    <aside id="quick"></aside>
+  </div>
+</div>
+<dialog id="dlg"><p id="dtx"></p><button class="btn sm" onclick="dlg.close()">Fechar</button></dialog>
+
+<script src="script.js"></script>
+</body>
+</html>
