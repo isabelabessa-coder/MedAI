@@ -17,16 +17,8 @@
   document.querySelector('header').insertBefore(btn,document.getElementById('more'));
   paint();
 })();
-/* ===== FIM DO TEMA ===== */
 
-/* ===== CONFIGURAÇÃO DO n8n =====
-   Cole aqui a Production URL do Webhook (workflow ATIVO, com CORS liberado para este site).
-   Vazia = modo demonstração, com a Eva local.
-   Resposta esperada do n8n (Respond to Webhook):
-   {reply, type:"CONSULTA|EXAME|AGENDAMENTO|OUTRO", options:[{label,value}], handoff:false,
-    appointment:null|{id,tipo,item,unidade,endereco,data:"AAAA-MM-DD",hora:"HH:MM",status:"Agendado"},
-    units:null|[{nome,endereco,distancia}]} */
-const CONFIG={WEBHOOK_URL:"",TIMEOUT:15000};
+const CONFIG={WEBHOOK_URL:"https://prjmedai.app.n8n.cloud/webhook/medai-eva",TIMEOUT:30000}
 
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!==undefined)e.textContent=x;return e};
