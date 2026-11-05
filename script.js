@@ -112,8 +112,8 @@ async function enviarParaEva(p){
 
 /* ===== CHAT ===== */
 function add(w,t){const d=el('div','m '+w,t);$('#msgs').append(d);d.scrollIntoView({block:'end'});return d}
-function opts(o){const d=el('div','ops');o.forEach(x=>{const b=el('button','btn sm ghost',x.label);
-  b.onclick=()=>{d.remove();if(x.value==='abrir:rate')avaliar();else if(x.value.startsWith('abrir:'))tab(x.value.slice(6));else send(x.label,x.value)};d.append(b)});
+function opts(o){const d=el('div','ops');if(o.some(x=>x.value==='abrir:rate'))d.classList.add('rate-ops');o.forEach(x=>{const b=el('button','btn sm ghost',x.label);
+  b.onclick=()=>{if(x.value==='abrir:rate'){avaliar();return}d.remove();if(x.value.startsWith('abrir:'))tab(x.value.slice(6));else send(x.label,x.value)};d.append(b)});
   $('#msgs').append(d);d.scrollIntoView({block:'end'})}
 function save(w,t){conv.msgs.push({w,t});if(w=='u'&&conv.title=='Nova conversa')conv.title=t.slice(0,40);if(!hist.includes(conv))hist.unshift(conv);put('hist',hist)}
 function newConv(){conv={id:Date.now(),title:'Nova conversa',msgs:[]};st={};$('#msgs').innerHTML='';$('#in').disabled=false}
@@ -145,7 +145,7 @@ async function run(){
     if(r.appointment&&!appts.some(a=>a.id==r.appointment.id)){appts.push(r.appointment);if(window.Notification&&Notification.permission==='default')Notification.requestPermission()}
     put('appts',appts);
     if(r.options.length&&!r.handoff)opts(r.options);
-    if(r.handoff||r.appointment)opts([{label:'⭐ Avaliar atendimento',value:'abrir:rate'}])
+    if(r.handoff||r.appointment){$$('.rate-ops').forEach(d=>d.remove());opts([{label:'⭐ Avaliar atendimento',value:'abrir:rate'}])}
   }catch(e){ty.remove();show('s-err')}}
 $('#retry').onclick=()=>{show('app');run()};
 addEventListener('online',()=>{if(!$('#s-err').hidden)$('#retry').click()});
@@ -206,11 +206,15 @@ const stars=$('#stars');
 for(let i=1;i<=5;i++){const b=el('button','star','☆');b.type='button';b.setAttribute('aria-label',i+(i>1?' estrelas':' estrela'));
   b.onclick=()=>{nota=i;[...stars.children].forEach((s,j)=>s.textContent=j<i?'★':'☆')};stars.append(b)}
 function avaliar(){nota=0;[...stars.children].forEach(s=>s.textContent='☆');$('#rc2').value='';$('#rate').showModal()}
-$('#rsend').onclick=async()=>{if(!nota)return;
+$('#rsend').onclick=()=>{
+  const b=$('#rsend');
+  if(!nota){const o=b.textContent;b.textContent='Escolha uma nota';setTimeout(()=>b.textContent=o,1500);return}
   const r={conversationId:conv.id,rating:nota,comment:$('#rc2').value.trim(),at:new Date().toISOString()};
   const rs=get('ratings')||[];rs.push(r);put('ratings',rs);
-  try{await enviarParaEva({message:'avaliação',context:'avaliacao',...r})}catch(_){}
-  $('#rate').close();const t='Obrigada pela avaliação! ⭐';add('e',t);save('e',t)};
+  $('#rate').close();                       // fecha na hora, sem esperar o servidor
+  $$('.rate-ops').forEach(d=>d.remove());   // remove o balão "Avaliar atendimento" do chat
+  const t='Obrigada pela avaliação! ⭐';add('e',t);save('e',t);
+  enviarParaEva({message:'avaliação',context:'avaliacao',...r}).catch(()=>{})}; // envio em segundo plano
 
 /* ===== EMERGÊNCIA ===== */
 [['SAMU','192'],['Bombeiros','193'],['Polícia Militar','190'],['Defesa Civil','199'],['Disque Saúde','136'],['CVV – apoio emocional','188']].forEach(([n,t])=>{
