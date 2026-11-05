@@ -15,6 +15,17 @@
   <button class="btn" id="go">Começar</button>
 </section>
 
+<section id="s-login" class="screen" hidden>
+  <div class="box">
+    <h2>Entrar</h2>
+    <label for="lc">CPF</label><input id="lc" inputmode="numeric" maxlength="14" placeholder="000.000.000-00" autocomplete="username">
+    <label for="lp">Senha</label><input id="lp" type="password" autocomplete="current-password">
+    <span class="er" id="le" hidden></span>
+    <button class="btn" id="lgo" style="margin-top:16px;width:100%">Entrar</button>
+    <p style="text-align:center"><button class="x" id="toreg" style="text-align:center">Criar cadastro</button></p>
+  </div>
+</section>
+
 <section id="s-reg" class="screen" hidden>
   <div class="box">
     <h2>Crie seu cadastro</h2>
@@ -23,9 +34,26 @@
     <label for="rp">Senha</label><input id="rp" type="password" autocomplete="new-password"><span class="er" id="ep" hidden></span>
     <label for="rc">Cidade</label><input id="rc"><span class="er" id="ec" hidden></span>
     <label for="ru">Estado (UF)</label><input id="ru" maxlength="2"><span class="er" id="eu" hidden></span>
-    <label style="display:flex;gap:8px;font-weight:400"><input type="checkbox" id="rl" style="width:auto;margin-top:4px">Concordo com o uso dos meus dados, conforme a LGPD (demonstração).</label>
+    <label for="rf">CPF</label><input id="rf" inputmode="numeric" maxlength="14" placeholder="000.000.000-00" autocomplete="off"><span class="er" id="ef" hidden></span>
+    <label for="rv">Como você usa a saúde?</label>
+    <select id="rv">
+      <option value="">Selecione</option>
+      <option value="sus">SUS (público)</option>
+      <option value="privado">Plano de saúde privado</option>
+      <option value="nenhum">Particular / nenhum</option>
+    </select><span class="er" id="ev" hidden></span>
+    <div id="bs" hidden>
+      <label for="rs">Cartão Nacional de Saúde (CNS)</label>
+      <input id="rs" inputmode="numeric" maxlength="18" placeholder="000 0000 0000 0000"><span class="er" id="es" hidden></span>
+    </div>
+    <div id="bq" hidden>
+      <label for="rq">Plano / operadora</label>
+      <input id="rq"><span class="er" id="eq" hidden></span>
+    </div>
+    <label style="display:flex;gap:8px;font-weight:400;margin-top:16px"><input type="checkbox" id="rl" style="width:auto;margin-top:4px">Concordo com o uso dos meus dados, conforme a LGPD.</label>
     <span class="er" id="el" hidden></span>
     <button class="btn" id="reg" style="margin-top:16px;width:100%">Criar cadastro</button>
+    <p style="text-align:center"><button class="x" id="tologin" style="text-align:center">Já tenho cadastro</button></p>
   </div>
 </section>
 
@@ -51,6 +79,7 @@
       </section>
       <section class="tab" id="t-consultas"></section>
       <section class="tab" id="t-exames"></section>
+      <section class="tab" id="t-unid"></section>
       <section class="tab" id="t-emerg">
         <div class="card red"><b>Risco de vida? Ligue agora para o SAMU: 192</b><br><a class="btn red" href="tel:192" style="margin-top:8px">Ligar 192</a></div>
         <label for="etx">Descreva o que você está sentindo</label>
@@ -67,7 +96,19 @@
     <aside id="quick"></aside>
   </div>
 </div>
+
 <dialog id="dlg"><p id="dtx"></p><button class="btn sm" onclick="dlg.close()">Fechar</button></dialog>
+
+<dialog id="rate">
+  <h3 style="margin-top:0">Como foi o atendimento?</h3>
+  <div id="stars" style="display:flex;gap:4px"></div>
+  <label for="rc2">Comentário (opcional)</label>
+  <textarea id="rc2" rows="3"></textarea>
+  <div style="display:flex;gap:8px;margin-top:12px">
+    <button class="btn sm" id="rsend">Enviar</button>
+    <button class="btn sm ghost" onclick="rate.close()">Agora não</button>
+  </div>
+</dialog>
 
 <script src="script.js"></script>
 </body>
