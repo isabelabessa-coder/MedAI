@@ -28,7 +28,7 @@
    {reply, type:"CONSULTA|EXAME|AGENDAMENTO|OUTRO", options:[{label,value}], handoff:false,
     appointment:null|{id,tipo,item,unidade,endereco,data:"AAAA-MM-DD",hora:"HH:MM",status:"Agendado"},
     units:null|[{nome,endereco,distancia}]} */
-const CONFIG={WEBHOOK_URL:"",TIMEOUT:30000}
+const CONFIG={WEBHOOK_URL:"https://prjmedai.app.n8n.cloud/webhook-test/medai-eva",TIMEOUT:30000}
 
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const el=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!==undefined)e.textContent=x;return e};
